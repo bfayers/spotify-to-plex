@@ -15,6 +15,7 @@ export default async function getAlbumTracks(uri: string, token: string, key: st
             score: metadata.score,
             image: metadata.thumb,
             title: metadata.title,
+            duration_ms: metadata.duration,
             album: {
                 id: metadata.parentKey,
                 guid: metadata.parentGuid,

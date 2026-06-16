@@ -18,6 +18,7 @@ build/
 **/.next/
 out/
 **/out/
+.specs/
 
 CLAUDE.md
 

@@ -5,6 +5,7 @@ export type SearchResponse = {
     artist: string;
     title: string;
     album: string;
+    duration_ms?: number;
     queries?: SearchQuery[]
     result: PlexTrack[];
 };

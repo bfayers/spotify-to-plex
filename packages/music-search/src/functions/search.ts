@@ -10,6 +10,12 @@ export function search(find: Track, options: Track[], analyze: boolean = false) 
 
     const results: Track[] = options
         .map(item => {
+            // Calculate duration similarity only if both have duration
+            const hasBothDurations = !!(find.duration_ms && item.duration_ms);
+            const durationSimilarity = hasBothDurations
+                ? 1 - Math.abs(find.duration_ms! - item.duration_ms!) / Math.max(find.duration_ms!, item.duration_ms!)
+                : 0;
+
             const matching = {
                 album: compareTitles(item.album, find.album, true),
                 title: compareTitles(item.title, find.title, true),
@@ -17,6 +23,7 @@ export function search(find: Track, options: Track[], analyze: boolean = false) 
                 artistWithTitle: compareTitles(item.title, `${find.artist} ${find.title}`, true),
                 artist: compareTitles(item.artist, find.artist, true),
                 alternativeArtist: compareTitles(removeFeaturing(item.artist), find.artist, true),
+                duration: { similarity: durationSimilarity, available: hasBothDurations },
             };
 
             return {
@@ -25,8 +32,12 @@ export function search(find: Track, options: Track[], analyze: boolean = false) 
             }
         })
         .sort((a, b) => {
-            const aMatches = a.matching ? a.matching.artist.similarity + a.matching.title.similarity + a.matching.album.similarity : 0;
-            const bMatches = b.matching ? b.matching.artist.similarity + b.matching.title.similarity + b.matching.album.similarity : 0;
+            const aMatches = a.matching
+                ? a.matching.artist.similarity + a.matching.title.similarity + a.matching.album.similarity + (a.matching.duration?.similarity ?? 0) * 0.5
+                : 0;
+            const bMatches = b.matching
+                ? b.matching.artist.similarity + b.matching.title.similarity + b.matching.album.similarity + (b.matching.duration?.similarity ?? 0) * 0.5
+                : 0;
 
             return bMatches - aMatches;
         })
@@ -65,6 +76,7 @@ export function search(find: Track, options: Track[], analyze: boolean = false) 
                 title: item.title,
                 artist: item.artist,
                 album: item.album,
+                duration_ms: item.duration_ms,
                 matching: analyze ? item.matching : undefined,
                 reason: analyze ? reason : undefined
             }))

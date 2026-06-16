@@ -28,7 +28,8 @@ export async function getSpotifyData(api: SpotifyApi, id: string, simplified: bo
                     artists: item.artists.map(artist => artist.name),
                     album: result.name,
                     title: item.name,
-                    album_id: result.id
+                    album_id: result.id,
+                    duration_ms: item.duration_ms
                 }))
             }
         } catch (_e) { }
@@ -82,7 +83,7 @@ export async function getSpotifyData(api: SpotifyApi, id: string, simplified: bo
 
     const tracks = scraperData.tracks?.map((track) => {
 
-        const { artists, album, name, id, uri } = track;
+        const { artists, album, name, id, uri, duration_ms } = track;
         const splitArtists = artists.flatMap(artist =>
             artist.name.split(',').map(name => name.trim())
         );
@@ -92,7 +93,8 @@ export async function getSpotifyData(api: SpotifyApi, id: string, simplified: bo
             title: name || '',
             album: album?.name || '',
             artists: splitArtists,
-            album_id: 'unknown'
+            album_id: 'unknown',
+            duration_ms
         }
     }) || []
 
@@ -149,7 +151,8 @@ export async function getSpotifyData(api: SpotifyApi, id: string, simplified: bo
                     return {
                         ...track,
                         album: enrichedTrack.album.name,
-                        album_id: enrichedTrack.album.id
+                        album_id: enrichedTrack.album.id,
+                        duration_ms: track.duration_ms ?? enrichedTrack.duration_ms
                     };
                 });
 

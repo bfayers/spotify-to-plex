@@ -8,6 +8,7 @@ export default function searchResultToTracks(items: HubSearchResult[]) {
             id: item.id,
             artist: item.artist.title,
             title: item.title,
-            album: item.album.title
+            album: item.album.title,
+            duration_ms: item.duration_ms
         }))
 }

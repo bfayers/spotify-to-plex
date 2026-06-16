@@ -94,6 +94,7 @@ function processTrackMetadata(metadata: any[], response: HubSearchResult[]) {
             score: item.score || 0,
             image: item.thumb || '',
             title: item.title || '',
+            duration_ms: item.duration,
             album: {
                 id: item.parentKey || '',
                 guid: item.parentGuid || '',

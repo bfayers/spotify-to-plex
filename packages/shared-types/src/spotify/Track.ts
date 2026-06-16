@@ -5,4 +5,5 @@ export type Track = {
     artists: string[];
     album_id: string;
     album_artist?: string;
+    duration_ms?: number;
 }

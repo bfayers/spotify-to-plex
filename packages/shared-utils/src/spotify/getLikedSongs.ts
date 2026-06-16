@@ -28,7 +28,8 @@ export async function getLikedSongs(api: SpotifyApi, userId: string, userName: s
                     artist: item.track.artists?.[0]?.name || 'Unknown',
                     album: item.track.album?.name || 'Unknown',
                     artists: artists || [],
-                    album_id: item.track.album?.id || 'unknown'
+                    album_id: item.track.album?.id || 'unknown',
+                    duration_ms: item.track.duration_ms
                 }
             })
             .filter((track)=>!!track);
@@ -53,7 +54,8 @@ export async function getLikedSongs(api: SpotifyApi, userId: string, userName: s
                             artist: item.track.artists?.[0]?.name || 'Unknown',
                             album: item.track.album?.name || 'Unknown',
                             artists: item.track.artists?.map(artist => artist.name) || [],
-                            album_id: item.track.album?.id || 'unknown'
+                            album_id: item.track.album?.id || 'unknown',
+                            duration_ms: item.track.duration_ms
                         }
                     })
                     .filter((track)=>!!track);

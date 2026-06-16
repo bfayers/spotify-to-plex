@@ -19,6 +19,7 @@ export type PlexTrack = {
     title: string;
     image: string;
     src: string;
+    duration_ms?: number;
 
     matching?: Track["matching"]
 }

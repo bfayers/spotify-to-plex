@@ -10,7 +10,8 @@ export default function hubSearchToPlexTrack(item: HubSearchResult): PlexTrack {
         title: item.title,
         src: 'tbd',
         album: item.type == 'track' ? { ...item.album } : undefined,
-        artist: { ...item.artist }
+        artist: { ...item.artist },
+        duration_ms: item.type == 'track' ? item.duration_ms : undefined
     };
 
 

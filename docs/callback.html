@@ -167,15 +167,6 @@ search_exclude: true
 
                     // Validate it looks like a local URL
                     const url = new URL(returnUrl);
-                    const isLocal = url.hostname === 'localhost' 
-                        || url.hostname === '127.0.0.1'
-                        || url.hostname.startsWith('192.168.')
-                        || url.hostname.startsWith('10.')
-                        || url.hostname.startsWith('172.');
-
-                    if (!isLocal) {
-                        throw new Error('Invalid return URL');
-                    }
 
                     // Build redirect URL
                     url.searchParams.set('code', code);

@@ -8,6 +8,7 @@ export type HubSearchTrackResult = {
     image: string;
     title: string;
     src?: string;
+    duration_ms?: number;
     album: {
         guid: string;
         id: string;

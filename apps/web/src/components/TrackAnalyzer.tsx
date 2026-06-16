@@ -111,6 +111,16 @@ const TrackAnalyzer = forwardRef<TrackAnalyzerHandles, unknown>((_props, ref) =>
                                 {track?.album}
                             </Typography>
                         </Box>
+                        {track?.duration_ms && (
+                            <Box sx={{ flex: 1, display: 'flex' }}>
+                                <Typography variant="body2" sx={{ width: '60px' }}>
+                                    <strong>Duration</strong>
+                                </Typography>
+                                <Typography variant="body2" sx={{ flex: 1 }}>
+                                    {Math.floor(track.duration_ms / 60000)}:{String(Math.floor((track.duration_ms % 60000) / 1000)).padStart(2, '0')}
+                                </Typography>
+                            </Box>
+                        )}
                     </Box>
 
                     <Divider sx={{ mt: 1 }} />
@@ -154,7 +164,7 @@ const TrackAnalyzer = forwardRef<TrackAnalyzerHandles, unknown>((_props, ref) =>
 
                                     {results.map((result: PlexTrack) => {
 
-                                        const { id: resultId, title, artist, album, src, matching } = result;
+                                        const { id: resultId, title, artist, album, src, matching, duration_ms: resultDuration } = result;
 
                                         if (!matching)
                                             return null;
@@ -214,6 +224,16 @@ const TrackAnalyzer = forwardRef<TrackAnalyzerHandles, unknown>((_props, ref) =>
                                                         </Typography>
                                                     </Box>
                                                 }
+                                                {resultDuration && (
+                                                    <Box sx={{ flex: 1, display: 'flex' }}>
+                                                        <Typography variant="body2" sx={{ width: '60px' }}>
+                                                            <strong>Duration</strong>
+                                                        </Typography>
+                                                        <Typography variant="body2" sx={{ flex: 1 }}>
+                                                            {Math.floor(resultDuration / 60000)}:{String(Math.floor((resultDuration % 60000) / 1000)).padStart(2, '0')}
+                                                        </Typography>
+                                                    </Box>
+                                                )}
                                             </Box>
                                             <Divider sx={{ mt: 1, mb: 1, borderColor: "black" }} />
                                             <Box sx={{ display: 'flex', mt: 1 }}>
@@ -247,6 +267,13 @@ const TrackAnalyzer = forwardRef<TrackAnalyzerHandles, unknown>((_props, ref) =>
                                                     <Typography variant="body2">Contains: {matching.album.contains ? "Yes" : "No"}</Typography>
                                                     <Typography variant="body2">Similarity: {getRoundedSimilarity(matching.album.similarity)}</Typography>
                                                 </Box>
+                                                {matching.duration && (
+                                                    <Box sx={{ width: "160px" }}>
+                                                        <Typography variant="body1"><strong>Duration</strong></Typography>
+                                                        <Typography variant="body2">Available: {matching.duration.available ? "Yes" : "No"}</Typography>
+                                                        <Typography variant="body2">Similarity: {matching.duration.available ? getRoundedSimilarity(matching.duration.similarity) : "N/A"}</Typography>
+                                                    </Box>
+                                                )}
                                             </Box>
                                         </Box>
                                     })}
